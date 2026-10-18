@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SliceLab — Dataset Column Explorer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">S</span><div><b>SliceLab</b><small>DATA WORKBENCH</small></div></div>
+    <div class="side-label">WORKSPACE</div>
+    <a class="nav active"><span>▦</span> Column Explorer</a>
+    <a class="nav" href="#guide"><span>⌘</span> Quick guide</a>
+    <div class="side-bottom"><div class="status-dot"></div><div><b>Local session</b><small>Your CSV stays on this machine</small></div></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><div class="eyebrow">PYTHON · PANDAS · TASK 18</div><h1>Dataset Column Explorer</h1><p>Slice rows. Pick columns. Understand your data.</p></div><div class="task-pill"><span>●</span> INTERNSHIP LAB <b>18 / 45</b></div></header>
+    <section class="stats"><div class="stat-card"><span class="stat-icon purple">▤</span><div><small>ACTIVE DATASET</small><strong id="statName">iris.csv</strong></div></div><div class="stat-card"><span class="stat-icon orange">↔</span><div><small>AVAILABLE COLUMNS</small><strong id="statCols">5</strong></div></div><div class="stat-card"><span class="stat-icon green">▦</span><div><small>TOTAL ROWS</small><strong id="statRows">20</strong></div></div></section>
+    <section class="workspace">
+      <div class="panel controls-panel"><div class="panel-heading"><div><span class="step">01</span><h2>Configure selection</h2></div><span class="tiny-tag">PANDAS</span></div>
+        <label for="dataset">Dataset</label><div class="select-wrap"><select id="dataset">{% for d in datasets %}<option value="{{ d }}">{{ d }}</option>{% endfor %}</select><span>⌄</span></div>
+        <div class="upload-row"><label class="upload-btn" for="csvFile">＋ Upload CSV</label><input id="csvFile" type="file" accept=".csv,text/csv"><span id="uploadName">CSV · max 5 MB</span></div>
+        <div class="divider"></div><label>Selection method</label><div class="mode-toggle"><button class="mode active" data-mode="loc"><b>.loc[ ]</b><small>Index labels</small></button><button class="mode" data-mode="iloc"><b>.iloc[ ]</b><small>Integer positions</small></button></div>
+        <div class="range-grid"><div><label for="rowStart">Start row</label><input id="rowStart" type="number" min="0" value="0"></div><div><label for="rowEnd">End row <span id="endHint">(inclusive)</span></label><input id="rowEnd" type="number" min="0" value="4"></div></div>
+        <div class="columns-head"><label>Columns to return</label><button id="selectAll" class="text-button">Select all</button></div><div id="columnChoices" class="column-choices"><span class="loading">Loading columns…</span></div>
+        <button id="runBtn" class="run-btn"><span>▶</span> Run selection <b>↗</b></button><div id="error" class="error" role="alert"></div>
+      </div>
+      <div class="right-stack"><section class="panel preview-panel"><div class="panel-heading"><div><span class="step">02</span><h2>Dataset preview</h2></div><span class="tiny-tag muted">FIRST 8 ROWS</span></div><div class="table-wrap"><table id="previewTable"><tbody><tr><td>Loading preview…</td></tr></tbody></table></div><div class="table-foot"><span><i class="mini-dot"></i> Source data</span><span id="previewMeta">—</span></div></section>
+      <section class="panel results-panel"><div class="panel-heading"><div><span class="step">03</span><h2>Selection output</h2></div><span class="success-tag" id="resultCount">READY</span></div><div id="resultEmpty" class="empty-state"><div class="empty-icon">⌁</div><b>Your result will appear here</b><p>Choose a row range and columns, then run your selection.</p></div><div id="resultArea" hidden><div class="code-line"><span>ƒ</span><code id="codeOutput"></code><button id="copyCode" title="Copy code">Copy</button></div><div class="table-wrap result-table-wrap"><table id="resultTable"></table></div><div class="table-foot"><span id="resultMeta">—</span><button class="text-button" id="downloadCsv">↓ Export result CSV</button></div></div></section></div>
+    </section>
+    <section class="guide" id="guide"><div><div class="eyebrow">THE 20-SECOND GUIDE</div><h2>Two ways to slice a DataFrame.</h2><p>Both select data, but the thing inside the brackets means something different.</p></div><div class="guide-cards"><article><span class="guide-symbol purple">L</span><div><h3><code>.loc[ ]</code> · Label-based</h3><p>Find rows by their index labels. The ending label is included in a slice.</p><code class="sample">df.loc[0:4, ['species']]</code></div></article><article><span class="guide-symbol orange">I</span><div><h3><code>.iloc[ ]</code> · Position-based</h3><p>Find rows by integer position. Pandas excludes the stop position in slices.</p><code class="sample">df.iloc[0:5, [0, 4]]</code></div></article></div></section>
+    <footer><span>SliceLab <b>·</b> Built with Python + Pandas</span><span>Made for learning, one slice at a time.</span></footer>
+  </main>
+</div><script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
